@@ -1,7 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
+import db.database
 
 app = Flask(__name__)
 
+db.database.init_db()
 
 @app.route('/', methods=['GET'])
 def get():
