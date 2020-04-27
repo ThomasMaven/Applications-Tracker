@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 import db.database
 from app_utils import AppUtils
 from config import Config
+from model.skill import Skill
+from model.skill_schema import SkillSchema
 from model.user import User
 from model.user_schema import UserSchema
 
@@ -12,6 +14,9 @@ db_session = db.database.init_db()
 
 user_schema = UserSchema(many=False)
 users_schema = UserSchema(many=True)
+
+skill_schema = SkillSchema(many=False)
+skills_schema = SkillSchema(many=True)
 
 
 @app.route('/', methods=['GET'])
@@ -63,6 +68,40 @@ def delete_user(id):
 
     return user_schema.jsonify(user)
 
+
+@app.route("/skill", methods=['GET'])
+def get_skill():
+    all_skills = Skill.query.all()
+    return skills_schema.jsonify(all_skills)
+
+
+@app.route("/skill", methods=['POST'])
+def create_skill():
+    name = request.json['name']
+
+    new_skill = Skill(name)
+    db_session.add(new_skill)
+    db_session.commit()
+    return skill_schema.jsonify(new_skill)
+
+
+@app.route("/skill/<id>", methods=['PUT'])
+def update_skill(id):
+    skill = Skill.query.get(id)
+    skill.name = request.json['name']
+    db_session.commit()
+
+    return user_schema.jsonify(skill)
+
+
+@app.route("/skill/<id>", methods=['DELETE'])
+def delete_skill(id):
+    skill = Skill.query.get(id)
+
+    db_session.delete(skill)
+    db_session.commit()
+
+    return user_schema.jsonify(skill)
 
 if __name__ == '__main__':
     app.run(debug=True)
