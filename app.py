@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify
 import db.database
+from app_utils import AppUtils
+from config import Config
 from model.user import User
 from model.user_schema import UserSchema
 
 app = Flask(__name__)
+app.route = AppUtils.prefix_route(app.route, Config.API_PREFIX)
 
 db_session = db.database.init_db()
 

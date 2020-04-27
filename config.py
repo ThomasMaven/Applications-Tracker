@@ -6,3 +6,5 @@ class Config:
     DB_TYPE="mysql"
     DB_NAME="cv"
     SQLALCHEMY_DATABASE_URI = f"{DB_TYPE}://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+    API_PREFIX="/api"
