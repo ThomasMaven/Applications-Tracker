@@ -27,14 +27,41 @@ def get_users():
 
 @app.route("/user", methods=['POST'])
 def create_user():
-    last_name = request.json['last_name'],
-    first_name = request.json['first_name'],
-    cv_url = request.json['cv_url'],
+    last_name = request.json['last_name']
+    first_name = request.json['first_name']
+    cv_url = request.json['cv_url']
 
     new_user = User(last_name, first_name, cv_url)
     db_session.add(new_user)
     db_session.commit()
     return user_schema.jsonify(new_user)
+
+
+@app.route("/user/<id>", methods=['PUT'])
+def update_user(id):
+    user = User.query.get(id)
+
+    last_name = request.json['last_name']
+    first_name = request.json['first_name']
+    cv_url = request.json['cv_url']
+
+    user.first_name = first_name
+    user.last_name = last_name
+    user.cv_url = cv_url
+
+    db_session.commit()
+
+    return user_schema.jsonify(user)
+
+
+@app.route("/user/<id>", methods=['DELETE'])
+def delete_user(id):
+    user = User.query.get(id)
+
+    db_session.delete(user)
+    db_session.commit()
+
+    return user_schema.jsonify(user)
 
 
 if __name__ == '__main__':
