@@ -1,7 +1,7 @@
 class Config:
-    DB_USER="root"
-    DB_PASS="mysql"
-    DB_HOST="127.0.0.0.1"
+    DB_USER="app"
+    DB_PASS="app"
+    DB_HOST="127.0.0.1"
     DB_PORT="3306"
     DB_TYPE="mysql"
     DB_NAME="cv"
