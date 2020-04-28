@@ -22,7 +22,13 @@ def get():
 @app.route("/users", methods=['GET'])
 def get_users():
     all_users = DbUser.query.all()
-    return users_schema.jsonify(all_users)
+    return users_schema.jsonify(all_users)\
+
+
+@app.route("/users/<id>", methods=['GET'])
+def get_user(id):
+    user = DbUser.query.get(id)
+    return user_schema.jsonify(user)
 
 
 @app.route("/users", methods=['POST'])
