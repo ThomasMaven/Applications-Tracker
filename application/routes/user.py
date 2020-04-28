@@ -19,13 +19,13 @@ def get():
     return jsonify({'msg': 'It works'})
 
 
-@app.route("/user", methods=['GET'])
+@app.route("/users", methods=['GET'])
 def get_users():
     all_users = DbUser.query.all()
     return users_schema.jsonify(all_users)
 
 
-@app.route("/user", methods=['POST'])
+@app.route("/users", methods=['POST'])
 def create_user():
     last_name = request.json['last_name']
     first_name = request.json['first_name']
@@ -38,7 +38,7 @@ def create_user():
     return user_schema.jsonify(new_user)
 
 
-@app.route("/user/<id>", methods=['PUT'])
+@app.route("/users/<id>", methods=['PUT'])
 def update_user(id):
     user = DbUser.query.get(id)
 
@@ -55,7 +55,7 @@ def update_user(id):
     return user_schema.jsonify(user)
 
 
-@app.route("/user/<id>", methods=['DELETE'])
+@app.route("/users/<id>", methods=['DELETE'])
 def delete_user(id):
     user = DbUser.query.get(id)
 
