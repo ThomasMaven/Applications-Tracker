@@ -1,9 +1,9 @@
 from flask import jsonify, request
 
 from application.app import ma, db
-from application.model.skill import Skill
+from application.model.dbskill import DbSkill
 from application.model.skill_schema import SkillSchema
-from application.model.user import User
+from application.model.dbuser import DbUser
 from application.model.user_schema import UserSchema
 from flask import current_app as app
 
@@ -21,7 +21,7 @@ def get():
 
 @app.route("/user", methods=['GET'])
 def get_users():
-    all_users = User.query.all()
+    all_users = DbUser.query.all()
     return users_schema.jsonify(all_users)
 
 
@@ -32,7 +32,7 @@ def create_user():
     cv_url = request.json['cv_url']
     skills = request.json['skills']
 
-    new_user = User(last_name=last_name, first_name=first_name, cv_url=cv_url)
+    new_user = DbUser(last_name=last_name, first_name=first_name, cv_url=cv_url)
     db.session.add(new_user)
     db.session.commit()
     return user_schema.jsonify(new_user)
@@ -40,7 +40,7 @@ def create_user():
 
 @app.route("/user/<id>", methods=['PUT'])
 def update_user(id):
-    user = User.query.get(id)
+    user = DbUser.query.get(id)
 
     last_name = request.json['last_name']
     first_name = request.json['first_name']
@@ -57,7 +57,7 @@ def update_user(id):
 
 @app.route("/user/<id>", methods=['DELETE'])
 def delete_user(id):
-    user = User.query.get(id)
+    user = DbUser.query.get(id)
 
     db.session.delete(user)
     db.session.commit()
