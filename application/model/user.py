@@ -1,13 +1,12 @@
-from sqlalchemy import Column, Integer, String
-from db.database import Base
+from application.app import db
 
 
-class User(Base):
+class User(db.Model):
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
-    last_name = Column(String(100), nullable=False)
-    first_name = Column(String(100), nullable=False)
-    cv_url = Column(String(255))
+    id = db.Column(db.Integer, primary_key=True)
+    last_name = db.Column(db.String(100), nullable=False)
+    first_name = db.Column(db.String(100), nullable=False)
+    cv_url = db.Column(db.String(255))
 
     def __init__(self, last_name=None, first_name=None, cv_url=None):
         self.last_name = last_name
