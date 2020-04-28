@@ -30,8 +30,9 @@ def create_user():
     last_name = request.json['last_name']
     first_name = request.json['first_name']
     cv_url = request.json['cv_url']
+    skills = request.json['skills']
 
-    new_user = User(last_name, first_name, cv_url)
+    new_user = User(last_name=last_name, first_name=first_name, cv_url=cv_url)
     db.session.add(new_user)
     db.session.commit()
     return user_schema.jsonify(new_user)

@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.declarative import declarative_base
 
 from application.app_utils import AppUtils
 from application.config import Config
@@ -13,3 +14,6 @@ ma = Marshmallow(app)
 
 with app.app_context():
     from application.routes import user
+
+if __name__ == '__main__':
+    app.run(debug=True)
