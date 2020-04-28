@@ -6,11 +6,11 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-flask = "*"
-flask-sqlalchemy = "*"
-flask-marshmallow = "*"
-marshmallow-sqlalchemy = "*"
-mysqlclient = "*"
+flask = "==1.1.2"
+flask-sqlalchemy = "==2.4.1"
+flask-marshmallow = "==0.12.0"
+marshmallow-sqlalchemy = "==0.23.0"
+pymysql = "==0.9.3"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
