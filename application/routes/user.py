@@ -1,7 +1,6 @@
 from flask import jsonify, request
 
-from application.app import ma, db
-from application.model.dbskill import DbSkill
+from application.app import db
 from application.model.skill_schema import SkillSchema
 from application.model.dbuser import DbUser
 from application.model.user_schema import UserSchema
@@ -22,7 +21,7 @@ def get():
 @app.route("/users", methods=['GET'])
 def get_users():
     all_users = DbUser.query.all()
-    return users_schema.jsonify(all_users)\
+    return users_schema.jsonify(all_users)
 
 
 @app.route("/users/<id>", methods=['GET'])
