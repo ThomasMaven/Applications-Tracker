@@ -2,7 +2,7 @@ from flask import jsonify, request
 
 from application.app import db
 from application.model.skill_schema import SkillSchema
-from application.model.dbuser import DbUser
+from application.model.user import DbUser
 from application.model.user_schema import UserSchema
 from flask import current_app as app
 

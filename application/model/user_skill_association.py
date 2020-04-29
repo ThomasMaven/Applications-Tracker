@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 from application.app import db
-from application.model import dbskill
+from application.model import skill
 
 
 class DbUserSkillAssociation(db.Model):
