@@ -1,10 +1,13 @@
 from flask import jsonify, request
 
 from application.app import db
+from application.model.skill import DbSkill
 from application.model.skill_schema import SkillSchema
 from application.model.user import DbUser
 from application.model.user_schema import UserSchema
 from flask import current_app as app
+
+from application.model.user_skill_association import DbUserSkillAssociation
 
 user_schema = UserSchema(many=False)
 users_schema = UserSchema(many=True)
@@ -37,10 +40,26 @@ def create_user():
     last_name = request.json['last_name']
     first_name = request.json['first_name']
     cv_url = request.json['cv_url']
-    skills = request.json['skills']
+
     new_user = DbUser(last_name=last_name, first_name=first_name, cv_url=cv_url)
     db.session.add(new_user)
     db.session.commit()
+
+    skill_list = []
+    for key in request.json['skills']:
+        skill_id = db.session.query(DbSkill).filter_by(name=key).scalar().id
+        if skill_id is None:
+            new_skill = DbSkill(name=key)
+            db.session.add(new_skill)
+            db.session.commit()
+            skill_id = new_skill.id
+
+        skill_list.append(
+            DbUserSkillAssociation(user_id=new_user.id, skill_id=skill_id, level=request.json['skills'][key]))
+    new_user.skill = skill_list
+    db.session.add(new_user)
+    db.session.commit()
+
     return user_schema.jsonify(new_user), "201"
 
 

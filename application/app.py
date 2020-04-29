@@ -8,6 +8,8 @@ from application.config import Config
 app = Flask(__name__)
 app.route = AppUtils.prefix_route(app.route, Config.API_PREFIX)
 app.config['SQLALCHEMY_DATABASE_URI'] = Config.SQLALCHEMY_DATABASE_URI
+app.config['SQLALCHEMY_ECHO'] = True
+
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
