@@ -38,7 +38,6 @@ def create_user():
     first_name = request.json['first_name']
     cv_url = request.json['cv_url']
     skills = request.json['skills']
-
     new_user = DbUser(last_name=last_name, first_name=first_name, cv_url=cv_url)
     db.session.add(new_user)
     db.session.commit()
