@@ -1,10 +1,13 @@
+import os
+
+
 class Config:
-    DB_USER="app"
-    DB_PASS="app"
-    DB_HOST="127.0.0.1"
-    DB_PORT="3306"
-    DB_TYPE="mysql"
-    DB_NAME="cv"
+    DB_USER = os.environ.get('DB_USER')
+    DB_PASS = os.environ.get('DB_PASS')
+    DB_HOST = os.environ.get('DB_HOST')
+    DB_PORT = os.environ.get('DB_PORT')
+    DB_TYPE = os.environ.get('DB_TYPE')
+    DB_NAME = os.environ.get('DB_NAME')
     SQLALCHEMY_DATABASE_URI = f"{DB_TYPE}://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-    API_PREFIX="/api"
+    API_PREFIX = '/api'
