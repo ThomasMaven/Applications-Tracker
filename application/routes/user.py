@@ -47,8 +47,10 @@ def create_user():
 
     skill_list = []
     for key in request.json['skills']:
-        skill_id = db.session.query(DbSkill).filter_by(name=key).scalar().id
-        if skill_id is None:
+        skill = db.session.query(DbSkill).filter_by(name=key).scalar()
+        if skill is not None:
+            skill_id = skill.id
+        else:
             new_skill = DbSkill(name=key)
             db.session.add(new_skill)
             db.session.commit()
