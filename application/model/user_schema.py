@@ -8,4 +8,4 @@ class UserSchema(ma.Schema):
     skills = fields.Nested(SkillSchema, many=True)
 
     class Meta:
-        fields = ('id', 'first_name', 'last_name', 'cv_url', "skills")
+        fields = ('id', 'first_name', 'last_name', 'cv_url', 'skills')

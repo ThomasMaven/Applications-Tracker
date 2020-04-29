@@ -8,6 +8,6 @@ class Config:
     DB_PORT = os.environ.get('DB_PORT')
     DB_TYPE = os.environ.get('DB_TYPE')
     DB_NAME = os.environ.get('DB_NAME')
-    SQLALCHEMY_DATABASE_URI = f"{DB_TYPE}://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    SQLALCHEMY_DATABASE_URI = f'{DB_TYPE}://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
     API_PREFIX = '/api'

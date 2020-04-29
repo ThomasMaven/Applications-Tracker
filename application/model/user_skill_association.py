@@ -10,5 +10,5 @@ class DbUserSkillAssociation(db.Model):
     user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
     level = Column(Integer)
-    skill = relationship("DbSkill", back_populates="user")
-    user = relationship("DbUser", back_populates="skill")
+    skill = relationship('DbSkill', back_populates='user')
+    user = relationship('DbUser', back_populates='skill')

@@ -21,13 +21,13 @@ def get():
     return jsonify({'msg': 'It works'})
 
 
-@app.route("/users", methods=['GET'])
+@app.route('/users', methods=['GET'])
 def get_users():
     all_users = DbUser.query.all()
     return users_schema.jsonify(all_users)
 
 
-@app.route("/users/<id>", methods=['GET'])
+@app.route('/users/<id>', methods=['GET'])
 def get_user(id):
     user = DbUser.query.get(id)
     if user is None:
@@ -35,7 +35,7 @@ def get_user(id):
     return user_schema.jsonify(user)
 
 
-@app.route("/users", methods=['POST'])
+@app.route('/users', methods=['POST'])
 def create_user():
     last_name = request.json['last_name']
     first_name = request.json['first_name']
@@ -60,14 +60,14 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
 
-    return user_schema.jsonify(new_user), "201"
+    return user_schema.jsonify(new_user), 201
 
 
-@app.route("/users/<id>", methods=['PUT'])
+@app.route('/users/<id>', methods=['PUT'])
 def update_user(id):
     user = DbUser.query.get(id)
     if user is None:
-        return user_schema.jsonify(user), "404"
+        return user_schema.jsonify(user), 404
     last_name = request.json['last_name']
     first_name = request.json['first_name']
     cv_url = request.json['cv_url']
@@ -81,12 +81,12 @@ def update_user(id):
     return user_schema.jsonify(user)
 
 
-@app.route("/users/<id>", methods=['DELETE'])
+@app.route('/users/<id>', methods=['DELETE'])
 def delete_user(id):
     user = DbUser.query.get(id)
     if user is None:
-        return user_schema.jsonify(user), "404"
+        return user_schema.jsonify(user), 404
     db.session.delete(user)
     db.session.commit()
 
-    return "", "204"
+    return '', 204
