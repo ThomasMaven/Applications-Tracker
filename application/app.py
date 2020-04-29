@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.ext.declarative import declarative_base
 
 from application.app_utils import AppUtils
 from application.config import Config

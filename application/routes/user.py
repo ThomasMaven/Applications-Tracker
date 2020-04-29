@@ -27,6 +27,8 @@ def get_users():
 @app.route("/users/<id>", methods=['GET'])
 def get_user(id):
     user = DbUser.query.get(id)
+    if user is None:
+        return user_schema.jsonify(user), "404"
     return user_schema.jsonify(user)
 
 
@@ -40,13 +42,14 @@ def create_user():
     new_user = DbUser(last_name=last_name, first_name=first_name, cv_url=cv_url)
     db.session.add(new_user)
     db.session.commit()
-    return user_schema.jsonify(new_user)
+    return user_schema.jsonify(new_user), "201"
 
 
 @app.route("/users/<id>", methods=['PUT'])
 def update_user(id):
     user = DbUser.query.get(id)
-
+    if user is None:
+        return user_schema.jsonify(user), "404"
     last_name = request.json['last_name']
     first_name = request.json['first_name']
     cv_url = request.json['cv_url']
@@ -63,8 +66,9 @@ def update_user(id):
 @app.route("/users/<id>", methods=['DELETE'])
 def delete_user(id):
     user = DbUser.query.get(id)
-
+    if user is None:
+        return user_schema.jsonify(user), "404"
     db.session.delete(user)
     db.session.commit()
 
-    return user_schema.jsonify(user)
+    return "", "204"
