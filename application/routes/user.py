@@ -27,9 +27,9 @@ def get_users():
     return users_schema.jsonify(all_users)
 
 
-@app.route('/users/<id>', methods=['GET'])
-def get_user(id):
-    user = DbUser.query.get(id)
+@app.route('/users/<user_id>', methods=['GET'])
+def get_user(user_id):
+    user = DbUser.query.get(user_id)
     if user is None:
         return user_schema.jsonify(user), "404"
     return user_schema.jsonify(user)
@@ -63,9 +63,9 @@ def create_user():
     return user_schema.jsonify(new_user), 201
 
 
-@app.route('/users/<id>', methods=['PUT'])
-def update_user(id):
-    user = DbUser.query.get(id)
+@app.route('/users/<user_id>', methods=['PUT'])
+def update_user(user_id):
+    user = DbUser.query.get(user_id)
     if user is None:
         return user_schema.jsonify(user), 404
     last_name = request.json['last_name']
@@ -81,9 +81,9 @@ def update_user(id):
     return user_schema.jsonify(user)
 
 
-@app.route('/users/<id>', methods=['DELETE'])
-def delete_user(id):
-    user = DbUser.query.get(id)
+@app.route('/users/<user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = DbUser.query.get(user_id)
     if user is None:
         return user_schema.jsonify(user), 404
     db.session.delete(user)
