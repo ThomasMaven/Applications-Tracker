@@ -67,25 +67,6 @@ def create_user():
     return user_schema.jsonify(new_user), 201
 
 
-@app.route('/users/<user_id>', methods=['PUT'])
-def update_user(user_id):
-    user = DbUser.query.get(user_id)
-    if user is None:
-        return user_schema.jsonify(user), 404
-    last_name = request.json['last_name']
-    first_name = request.json['first_name']
-    cv_url = request.json['cv_url']
-    cv_url = s3Transfer.upload_file_to_s3(cv_url)
-
-    user.first_name = first_name
-    user.last_name = last_name
-    user.cv_url = cv_url
-
-    db.session.commit()
-
-    return user_schema.jsonify(user)
-
-
 @app.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
     user = DbUser.query.get(user_id)
