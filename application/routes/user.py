@@ -32,7 +32,7 @@ def get_users():
 def get_user(user_id):
     user = DbUser.query.get(user_id)
     if user is None:
-        return user_schema.jsonify(user), "404"
+        return user_schema.jsonify(user), 404
     return user_schema.jsonify(user)
 
 
