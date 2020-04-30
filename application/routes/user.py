@@ -1,5 +1,6 @@
 from flask import jsonify, request
 
+from application import s3_transfer
 from application.app import db
 from application.model.skill import DbSkill
 from application.model.skill_schema import SkillSchema
@@ -8,7 +9,7 @@ from application.model.user_schema import UserSchema
 from flask import current_app as app
 
 from application.model.user_skill_association import DbUserSkillAssociation
-from application.s3_transfer import s3Transfer
+
 
 user_schema = UserSchema(many=False)
 users_schema = UserSchema(many=True)
@@ -41,7 +42,7 @@ def create_user():
     last_name = request.json['last_name']
     first_name = request.json['first_name']
     cv_url = request.json['cv_url']
-    cv_url = s3Transfer.upload_file_to_s3(cv_url)
+    cv_url = s3_transfer.upload_file_to_s3(cv_url)
 
     new_user = DbUser(last_name=last_name, first_name=first_name, cv_url=cv_url)
     db.session.add(new_user)
@@ -67,7 +68,7 @@ def delete_user(user_id):
     user = DbUser.query.get(user_id)
     if user is None:
         return user_schema.jsonify(user), 404
-    s3Transfer.remove_file_from_s3(user.cv_url)
+    s3_transfer.remove_file_from_s3(user.cv_url)
     db.session.delete(user)
     db.session.commit()
 
