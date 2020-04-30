@@ -1,7 +1,6 @@
 from sqlalchemy.orm import relationship
 
 from application.app import db
-import application.model.user_skill_association
 
 
 class DbSkill(db.Model):

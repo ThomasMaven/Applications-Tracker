@@ -45,21 +45,16 @@ def create_user():
 
     new_user = DbUser(last_name=last_name, first_name=first_name, cv_url=cv_url)
     db.session.add(new_user)
-    db.session.commit()
 
     skill_list = []
     for key in request.json['skills']:
-        skill = db.session.query(DbSkill).filter_by(name=key).scalar()
-        if skill is not None:
-            skill_id = skill.id
-        else:
-            new_skill = DbSkill(name=key)
-            db.session.add(new_skill)
-            db.session.commit()
-            skill_id = new_skill.id
+        skill = db.session.query(DbSkill).filter_by(name=key).first()
+        if skill is None:
+            skill = DbSkill(name=key)
+            db.session.add(skill)
 
         skill_list.append(
-            DbUserSkillAssociation(user_id=new_user.id, skill_id=skill_id, level=request.json['skills'][key]))
+            DbUserSkillAssociation(user=new_user, skill=skill, level=request.json['skills'][key]))
     new_user.skill = skill_list
     db.session.add(new_user)
     db.session.commit()
