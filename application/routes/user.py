@@ -91,6 +91,7 @@ def delete_user(user_id):
     user = DbUser.query.get(user_id)
     if user is None:
         return user_schema.jsonify(user), 404
+    s3Transfer.remove_file_from_s3(user.cv_url)
     db.session.delete(user)
     db.session.commit()
 

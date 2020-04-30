@@ -10,7 +10,7 @@ class DbUser(db.Model):
     last_name = db.Column(db.String(100), nullable=False)
     first_name = db.Column(db.String(100), nullable=False)
     cv_url = db.Column(db.String(255))
-    skill = relationship('DbUserSkillAssociation', back_populates='user', lazy='joined')
+    skill = relationship('DbUserSkillAssociation', back_populates='user', lazy='joined', cascade='save-update, merge, delete, delete-orphan')
 
     def __repr__(self):
         return f'{self.first_name} {self.last_name}. CV: {self.cv_url}'
