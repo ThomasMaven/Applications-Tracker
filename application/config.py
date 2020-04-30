@@ -11,3 +11,4 @@ class Config:
     SQLALCHEMY_DATABASE_URI = f'{DB_TYPE}://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
     API_PREFIX = '/api'
+    BUCKET_NAME = os.environ['S3_BUCKET_NAME']

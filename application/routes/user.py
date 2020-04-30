@@ -8,6 +8,7 @@ from application.model.user_schema import UserSchema
 from flask import current_app as app
 
 from application.model.user_skill_association import DbUserSkillAssociation
+from application.s3_transfer import s3Transfer
 
 user_schema = UserSchema(many=False)
 users_schema = UserSchema(many=True)
@@ -40,6 +41,7 @@ def create_user():
     last_name = request.json['last_name']
     first_name = request.json['first_name']
     cv_url = request.json['cv_url']
+    cv_url = s3Transfer.upload_file_to_s3(cv_url)
 
     new_user = DbUser(last_name=last_name, first_name=first_name, cv_url=cv_url)
     db.session.add(new_user)
@@ -73,6 +75,7 @@ def update_user(user_id):
     last_name = request.json['last_name']
     first_name = request.json['first_name']
     cv_url = request.json['cv_url']
+    cv_url = s3Transfer.upload_file_to_s3(cv_url)
 
     user.first_name = first_name
     user.last_name = last_name
