@@ -31,7 +31,7 @@ def get_users():
 
 
 @app.route('/users/<user_id>', methods=['GET'])
-def get_user(user_id):
+def get_user(user_id: str):
     user = DbUser.query.options(joinedload('skill')).get(user_id)
     if user is None:
         return user_schema.jsonify(user), 404

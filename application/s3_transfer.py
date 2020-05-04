@@ -6,7 +6,7 @@ import requests
 from application.config import Config
 
 
-def upload_file_to_s3(cv_url=None):
+def upload_file_to_s3(cv_url: str = None) -> None:
     if cv_url is None:
         return None
     rq = requests.get(cv_url, stream=True)
@@ -20,7 +20,7 @@ def upload_file_to_s3(cv_url=None):
     return f'https://{bucket_name}.s3.amazonaws.com/{s3_file_key}'
 
 
-def remove_file_from_s3(s3_cv_url):
+def remove_file_from_s3(s3_cv_url: str = None) -> None:
     if s3_cv_url is None:
         return None
     s3 = boto3.resource('s3')
