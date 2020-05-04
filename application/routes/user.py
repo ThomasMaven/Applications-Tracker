@@ -1,4 +1,5 @@
 from flask import jsonify, request
+from sqlalchemy.orm import joinedload
 
 from application import s3_transfer
 from application.app import db
@@ -25,13 +26,13 @@ def get():
 
 @app.route('/users', methods=['GET'])
 def get_users():
-    all_users = DbUser.query.all()
+    all_users = DbUser.query.options(joinedload('skill')).all()
     return users_schema.jsonify(all_users)
 
 
 @app.route('/users/<user_id>', methods=['GET'])
 def get_user(user_id):
-    user = DbUser.query.get(user_id)
+    user = DbUser.query.options(joinedload('skill')).get(user_id)
     if user is None:
         return user_schema.jsonify(user), 404
     return user_schema.jsonify(user)
