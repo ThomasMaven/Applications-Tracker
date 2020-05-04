@@ -1,4 +1,5 @@
-from flask import jsonify, request
+import typing
+from flask import jsonify, request, Response
 from sqlalchemy.orm import joinedload
 
 from application import s3_transfer
@@ -20,18 +21,18 @@ skills_schema = SkillSchema(many=True)
 
 
 @app.route('/', methods=['GET'])
-def get():
+def get() -> str:
     return jsonify({'msg': 'It works'})
 
 
 @app.route('/users', methods=['GET'])
-def get_users():
+def get_users() -> Response:
     all_users = DbUser.query.options(joinedload('skill')).all()
     return users_schema.jsonify(all_users)
 
 
 @app.route('/users/<user_id>', methods=['GET'])
-def get_user(user_id: str):
+def get_user(user_id: str) -> Response:
     user = DbUser.query.options(joinedload('skill')).get(user_id)
     if user is None:
         return user_schema.jsonify(user), 404
@@ -39,7 +40,7 @@ def get_user(user_id: str):
 
 
 @app.route('/users', methods=['POST'])
-def create_user():
+def create_user() -> typing.Tuple[Response, int]:
     last_name = request.json['last_name']
     first_name = request.json['first_name']
     cv_url = request.json['cv_url']
@@ -65,10 +66,10 @@ def create_user():
 
 
 @app.route('/users/<user_id>', methods=['DELETE'])
-def delete_user(user_id):
+def delete_user(user_id: str) -> typing.Tuple[str, int]:
     user = DbUser.query.get(user_id)
     if user is None:
-        return user_schema.jsonify(user), 404
+        return '', 404
     s3_transfer.remove_file_from_s3(user.cv_url)
     db.session.delete(user)
     db.session.commit()
